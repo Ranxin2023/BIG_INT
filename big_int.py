@@ -17,8 +17,11 @@ class BIG_INT:
                 int_value//=self.UNIT
         else:
             self.value:list[int]=[0]
+
+    # convert to string
     def __str__(self) ->str:
         return self.to_string(value_list=self.value)
+    
     def to_string(self, value_list:list[int])->str:
         if len(value_list)==0:
             return "0"
@@ -26,10 +29,12 @@ class BIG_INT:
         for _int in value_list[-2::-1]:
             res+=str(_int).zfill(9)
         return res
-    
+
+    # remove leading zeros
     def remove_leading_zeros(self, value_list:list[int])->None:
         while len(value_list)>1 and value_list[-1]==0:
             value_list.pop()
+
     def multiply_helper(self, value_list1:list[int], value_list2:list[int])->list[int]:
         # reverse_value1:list[int]=value_list1[::-1]
         # reverse_value2:list[int]=value_list2[::-1]
@@ -58,4 +63,12 @@ class BIG_INT:
             return result
     def power(self, exponent:int)->str:
         result:list[int]=self.power_helper(base=self.value, exponent=exponent)
+        return self.to_string(value_list=result)
+
+    def factorial(self, n:int)->str:
+        if n==0 or n==1:
+            return "1"
+        result:list[int]=[1]
+        for i in range(2, n+1):
+            result=self.multiply_helper(result, [i])
         return self.to_string(value_list=result)

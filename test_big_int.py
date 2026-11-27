@@ -10,7 +10,13 @@ def test_to_string():
     a = BIG_INT(big_int_list=[123, 456, 789])
     assert str(a) == "789000000456000000123"
 
+def test_add():
+    a = BIG_INT(int_value=1234567890123456789)
+    b = BIG_INT(int_value=9876543210987654321)
 
+    assert a.add(b.value) == str(
+        1234567890123456789 + 9876543210987654321
+    )
 def test_multiply():
     a = BIG_INT(int_value=1234567890123456789)
     b = BIG_INT(int_value=9876543210987654321)

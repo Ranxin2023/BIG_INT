@@ -35,6 +35,25 @@ class BIG_INT:
         while len(value_list)>1 and value_list[-1]==0:
             value_list.pop()
 
+    def add_helper(self, value_list1:list[int], value_list2:list[int])->list[int]:
+        max_len:int=max(len(value_list1), len(value_list2))
+        result:list[int]=[0]*(max_len+1)
+        for i in range(max_len):
+            if i<len(value_list1):
+                result[i]+=value_list1[i]
+            if i<len(value_list2):
+                result[i]+=value_list2[i]
+            if result[i]>=self.UNIT:
+                result[i+1]+=result[i]//self.UNIT
+                result[i]%=self.UNIT
+        self.remove_leading_zeros(value_list=result)
+        return result
+    
+    def add(self, value_list:list[int])->str:
+        result:list[int]=self.add_helper(value_list1=self.value, value_list2=value_list)
+        self.value=result
+        return str(self)
+    
     def multiply_helper(self, value_list1:list[int], value_list2:list[int])->list[int]:
         # reverse_value1:list[int]=value_list1[::-1]
         # reverse_value2:list[int]=value_list2[::-1]
@@ -47,9 +66,13 @@ class BIG_INT:
                     result[i+j]%=self.UNIT
         self.remove_leading_zeros(value_list=result)
         return result
+
+    # multiply two big integers
     def multiply(self, value_list:list[int])->str:
         result:list[int]=self.multiply_helper(value_list1=self.value, value_list2=value_list)
-        return self.to_string(value_list=result)
+        self.value=result
+        return str(self)
+
     def power_helper(self, base: list[int], exponent: int) -> list[int]:
         if exponent == 0:
             return [1]

@@ -13,15 +13,15 @@ def test_to_string():
 def test_add():
     a = BIG_INT(int_value=1234567890123456789)
     b = BIG_INT(int_value=9876543210987654321)
-
-    assert a.add(b.value) == str(
+    a.add(b.value)
+    assert str(a) == str(
         1234567890123456789 + 9876543210987654321
     )
 def test_multiply():
     a = BIG_INT(int_value=1234567890123456789)
     b = BIG_INT(int_value=9876543210987654321)
-
-    assert a.multiply(b.value) == str(
+    a.multiply(b.value)
+    assert str(a) == str(
         1234567890123456789 * 9876543210987654321
     )
 
@@ -56,3 +56,15 @@ def test_factorial():
     assert a.factorial(5) == "120"
     assert a.factorial(10) == "3628800"
     assert a.factorial(20) == "2432902008176640000"
+
+def test_scientific_notation():
+    a = BIG_INT(big_int_list=[123456789, 987654321])
+    assert a.scientific_notation(a.value, significant_digits=9) == "9.87654321e+17"
+    a= BIG_INT(big_int_list=[0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
+    assert a.scientific_notation(a.value, significant_digits=2) == "1.0e+81"
+    assert a.scientific_notation(a.value, significant_digits=1) == "1e+81"
+    a=BIG_INT(big_int_list=[123])
+    assert a.scientific_notation(a.value, significant_digits=18) == "1.23000000000000000e+2"
+    a=BIG_INT(big_int_list=[11])
+    a.power(10)
+    assert a.scientific_notation(a.value, significant_digits=5) == "2.5937e+10"

@@ -86,6 +86,7 @@ class BIG_INT:
             return result
     def power(self, exponent:int)->str:
         result:list[int]=self.power_helper(base=self.value, exponent=exponent)
+        self.value=result
         return self.to_string(value_list=result)
 
     def factorial(self, n:int)->str:
@@ -95,3 +96,19 @@ class BIG_INT:
         for i in range(2, n+1):
             result=self.multiply_helper(result, [i])
         return self.to_string(value_list=result)
+
+    def scientific_notation(self, value_list:list[int], significant_digits:int)->str:
+        if len(value_list)==0:
+            return "0"
+        number_of_digits:int=(len(value_list)-1)*9+len(str(value_list[-1]))
+        sign="+" # negative exponent not handled yet
+        value_list_str=self.to_string(value_list=value_list)
+        if len(value_list_str)<significant_digits:
+            value_list_str=value_list_str.ljust(significant_digits, "0")
+        # print(  
+        #     f"number_of_digits: {number_of_digits}, value_list_str: {value_list_str}, significant_digits: {significant_digits}"
+        # )
+        digit_part:str=value_list_str[0]
+        decimal_part:str=value_list_str[1:significant_digits] if significant_digits>1 else ""
+        return f"{digit_part}.{decimal_part}e{sign}{number_of_digits-1}" if significant_digits>1 \
+            else f"{digit_part}e{sign}{number_of_digits-1}"

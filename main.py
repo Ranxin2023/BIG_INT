@@ -23,6 +23,7 @@ def main():
     time_taken=time.time()
     big_int_2.power(100000)
     print(f"Time taken to compute 2^100000: {time.time()-time_taken} seconds")
-
+    a= BIG_INT(big_int_list=[1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    print(f"1.0e+81 = {a.scientific_notation(a.value, significant_digits=2)}")
 if __name__ == "__main__":
     main()
